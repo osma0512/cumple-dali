@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cumpleaños dali – Planta en Flor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://em-content.zobj.net/thumbs/120/apple/354/full-moon_1f315.png">
+  </head>
+  <body style="position: relative;">
+    <!-- Caja de regalo interactiva -->
+    <div id="boxContainer">
+      <div id="box">
+        <div class="bow">
+          <div class="bow-left"></div>
+          <div class="bow-right"></div>
+          <div class="bow-center"></div>
+        </div>
+        <div class="box-lid" id="boxLid"></div>
+        <div class="box-body"></div>
+        <div class="ribbon horizontal" id="ribbonH"></div>
+        <div class="ribbon vertical" id="ribbonV"></div>
+      </div>
+    </div>
+
+    <div id="birthdayMessage" class="birthday-message">
+      Todo esto lo hice pensando en ti, porque eres mi luna favorita. ¡Feliz cumpleaños!
+    </div>
+
+    <!-- Frases arriba -->
+    <div id="eyeQuotesBox" class="eye-quotes-box"></div>
+
+    <!-- Luna y estrellas -->
+    <div id="sun"></div>
+    <div id="moon"></div>
+    <div id="starContainer"></div>
+
+    <!-- Modal para fotos/videos -->
+    <div id="mediaModal" class="media-modal">
+      <div class="media-modal-content">
+        <span class="media-modal-close">&times;</span>
+        <div id="mediaModalInner"></div>
+        <div id="mediaModalMessage"></div>
+      </div>
+    </div>
+
+    <!-- Planta: Tronco, Flor y Ramas con Medios -->
+    <div id="plantContainer" style="display:none;">
+      <div id="plantTrunk"></div>
+      <div id="centralFlower">
+        <div class="petal left"></div>
+        <div class="petal center"></div>
+        <div class="petal right"></div>
+      </div>
+      <div id="starCounter" class="star-counter">
+        ⭐ Estrellas que te he regalado: <span id="starCount">0</span>
+      </div>
+      <div id="branch1" class="branch left-branch show">
+        <div class="curved-stem"></div>
+        <div class="media"><img src="assent/foto1.jpg" alt="Foto 1"></div>
+        <div class="media-message">pocas fotos pero muchas cosas que compartimos juntos!</div>
+        <div class="caption">Foto 1</div>
+      </div>
+      <div id="branch2" class="branch left-branch show">
+        <div class="curved-stem"></div>
+        <div class="media"><img src="assent/foto2.jpg" alt="Foto 2"></div>
+        <div class="media-message">todo un semestre aguantandome, es mucho no crees ?</div>
+        <div class="caption">Foto 2</div>
+      </div>
+      <div id="branch3" class="branch right-branch show">
+        <div class="curved-stem"></div>
+        <div class="media"><img src="assent/foto3.jpg" alt="Foto 3"></div>
+        <div class="media-message">aprecio mucho lo que tenemos </div>
+        <div class="caption">Foto 3</div>
+      </div>
+      <div id="branch4" class="branch right-branch show">
+        <div class="curved-stem"></div>
+        <div class="media"><img src="assent/foto4.jpg" alt="Foto 4"></div>
+        <div class="media-message">aunuq las fotos son casi las mismas en el mismo lugar no cambia que la paso bien contigo </div>
+        <div class="caption">Foto 4</div>
+      </div>
+      <div id="branch5" class="branch right-branch show">
+        <div class="curved-stem"></div>
+        <div class="media"><video src="assent/video1.mp4" controls></video></div>
+        <div class="media-message">¡Este es el mensaje del video!</div>
+        <div class="caption">Video</div>
+      </div>
+    </div>
+
+    <!-- Modal para la luna -->
+    <div id="moonModal" class="media-modal">
+      <div class="media-modal-content">
+        <span class="media-modal-close" id="moonModalClose">&times;</span>
+        <div style="font-size:1.3rem; margin-bottom:12px;">Tu eres mi luna favofita</div>
+        <div id="moonQuote" style="margin-bottom:18px; font-size:1.1rem;"></div>
+        <div id="moonPhaseImg" style="display:flex; justify-content:center; align-items:center; height:60px;"></div>
+      </div>
+    </div>
+
+    <div id="nightOverlay"></div>
+
+    <div id="beachBackground">
+      <!-- Palmeras SVG -->
+      <svg class="beach-palm" viewBox="0 0 60 120">
+        <ellipse cx="30" cy="110" rx="10" ry="12" fill="#8d5524"/>
+        <rect x="25" y="40" width="10" height="70" fill="#a47149" rx="5"/>
+        <path class="palm-leaf leaf1" d="M30 40 Q10 30 5 10 Q30 20 30 40" fill="#3cb371"/>
+        <path class="palm-leaf leaf2" d="M30 40 Q50 30 55 10 Q30 20 30 40" fill="#3cb371"/>
+        <path class="palm-leaf leaf3" d="M30 40 Q15 25 30 10 Q45 25 30 40" fill="#4fd17a"/>
+      </svg>
+      <svg class="beach-palm right" viewBox="0 0 60 120">
+        <ellipse cx="30" cy="110" rx="10" ry="12" fill="#8d5524"/>
+        <rect x="25" y="40" width="10" height="70" fill="#a47149" rx="5"/>
+        <path class="palm-leaf leaf1" d="M30 40 Q10 30 5 10 Q30 20 30 40" fill="#3cb371"/>
+        <path class="palm-leaf leaf2" d="M30 40 Q50 30 55 10 Q30 20 30 40" fill="#3cb371"/>
+        <path class="palm-leaf leaf3" d="M30 40 Q15 25 30 10 Q45 25 30 40" fill="#4fd17a"/>
+      </svg>
+
+      <!-- Palmeras extra -->
+      <svg class="beach-palm" style="left:18vw;width:60px;height:120px;" viewBox="0 0 60 120">
+        <ellipse cx="30" cy="110" rx="8" ry="10" fill="#8d5524"/>
+        <rect x="26" y="50" width="8" height="60" fill="#a47149" rx="4"/>
+        <path class="palm-leaf leaf1" d="M30 50 Q10 40 8 20 Q30 30 30 50" fill="#3cb371"/>
+        <path class="palm-leaf leaf2" d="M30 50 Q50 40 52 20 Q30 30 30 50" fill="#3cb371"/>
+      </svg>
+      <svg class="beach-palm right" style="right:18vw;width:60px;height:120px;" viewBox="0 0 60 120">
+        <ellipse cx="30" cy="110" rx="8" ry="10" fill="#8d5524"/>
+        <rect x="26" y="50" width="8" height="60" fill="#a47149" rx="4"/>
+        <path class="palm-leaf leaf1" d="M30 50 Q10 40 8 20 Q30 30 30 50" fill="#3cb371"/>
+        <path class="palm-leaf leaf2" d="M30 50 Q50 40 52 20 Q30 30 30 50" fill="#3cb371"/>
+      </svg>
+      
+      <!-- Concha -->
+      <svg class="beach-shell" style="position:absolute;bottom:32px;left:12vw;width:38px;height:28px;z-index:3;" viewBox="0 0 38 28">
+        <path d="M2 26 Q19 2 36 26 Q19 22 2 26" fill="#ffe4c4" stroke="#e0bfa3" stroke-width="2"/>
+        <ellipse cx="19" cy="24" rx="6" ry="3" fill="#fff7e6" opacity="0.7"/>
+      </svg>
+
+      <!-- Caracol -->
+      <svg class="beach-snail" style="position:absolute;bottom:28px;right:14vw;width:32px;height:22px;z-index:3;" viewBox="0 0 32 22">
+        <ellipse cx="18" cy="14" rx="12" ry="8" fill="#f7c59f"/>
+        <ellipse cx="18" cy="14" rx="7" ry="5" fill="none" stroke="#e0a97f" stroke-width="2"/>
+        <ellipse cx="18" cy="14" rx="3" ry="2" fill="none" stroke="#e0a97f" stroke-width="2"/>
+        <circle cx="28" cy="14" r="3" fill="#e0a97f"/>
+      </svg>
+    </div>
+    <svg class="beach-wave" style="position:absolute;bottom:0;left:0;width:100vw;height:60px;z-index:2;pointer-events:none;" viewBox="0 0 100 10" preserveAspectRatio="none">
+      <path d="M0 5 Q 10 0 20 5 T 40 5 T 60 5 T 80 5 T 100 5 V10 H0Z" fill="#aee2ff" opacity="0.7"/>
+    </svg>
+    <script src="script.js"></script>
+  </body>
+</html>

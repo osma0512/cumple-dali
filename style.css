@@ -1,0 +1,1090 @@
+/*-----------------------------------------------------
+  Reset y Fondo Inicial (día de verano)
+-------------------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  transition: background 2.5s;
+}
+
+body {
+  position: relative;
+  background: linear-gradient(to bottom, #aee2ff 0%, #fdf6e3 100%);
+}
+
+body.night {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+/* Sol */
+#sun {
+  position: fixed;
+  top: 40px;
+  left: 60px;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 30% 30%, #fffde4 70%, #ffe066 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 40px 10px #ffe066;
+  z-index: 100;
+  transition: opacity 1.5s, transform 1.5s;
+}
+body.night #sun {
+  opacity: 0;
+  transform: translateY(100px) scale(0.7);
+}
+
+/* Luna */
+#moon {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 30% 30%, #fffde4 70%, #fff9b0 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 40px 10px #fff9b0;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(40px) scale(0.8);
+  transition: opacity 1.5s, transform 1.5s;
+  display: block;
+}
+body.night #moon {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: moonGlow 2.5s infinite alternate;
+}
+
+@keyframes moonGlow {
+  from { box-shadow: 0 0 40px 10px #fff9b0; }
+  to   { box-shadow: 0 0 70px 20px #fffbe0; }
+}
+
+/* Overlay */
+#nightOverlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  transition: opacity 2s;
+  z-index: 98;
+}
+body.night #nightOverlay {
+  opacity: 0.45;
+}
+
+/*-----------------------------------------------------
+  Caja de Regalo (envuelto)
+-------------------------------------------------------*/
+#boxContainer {
+  position: absolute;
+  width: 250px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  animation: boxBounceIn 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+@keyframes boxBounceIn {
+  0%   { transform: scale(0.7) translateY(80px); opacity: 0; }
+  60%  { transform: scale(1.05) translateY(-10px); opacity: 1; }
+  80%  { transform: scale(0.97) translateY(5px);}
+  100% { transform: scale(1) translateY(0);}
+}
+
+#box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #B8A6D9; /* Color lila/lavanda */
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  border: 2px solid #9B8CC0; /* Borde un poco más oscuro */
+}
+
+.box-lid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: #B8A6D9; /* Mismo color lila/lavanda */
+  border: 2px solid #9B8CC0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transform-origin: top left;
+  transition: transform 1s cubic-bezier(.68,-0.55,.27,1.55);
+  z-index: 2;
+}
+
+.box-lid.open {
+  transform: rotateX(75deg) translateY(-40px) scale(1.1);
+  box-shadow: 0 24px 40px rgba(0,0,0,0.25);
+  transition: transform 1s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 1s;
+}
+
+.box-body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60%;
+  background: #B8A6D9; /* Mismo color lila/lavanda */
+  border: 2px solid #9B8CC0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 1;
+}
+
+/* Lazos negros */
+.ribbon {
+  position: absolute;
+  background: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  border-radius: 4px;
+  transition: transform 1s cubic-bezier(.68,-0.55,.27,1.55);
+  z-index: 3;
+}
+
+.ribbon.horizontal {
+  top: 46%;
+  left: 0;
+  width: 100%;
+  height: 16px;
+}
+
+.ribbon.vertical {
+  left: 46%;
+  top: 0;
+  width: 16px;
+  height: 100%;
+}
+
+.ribbon.horizontal.open {
+  animation: untieHorizontal 1s forwards cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.ribbon.vertical.open {
+  animation: untieVertical 1s forwards cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+@keyframes untieHorizontal {
+  0%   { transform: translateX(0) scaleY(1); opacity: 1; }
+  60%  { transform: translateX(-40px) scaleY(1.2) rotate(-8deg); opacity: 1; }
+  100% { transform: translateX(-300px) scaleY(0.5) rotate(-25deg); opacity: 0; }
+}
+@keyframes untieVertical {
+  0%   { transform: translateY(0) scaleX(1); opacity: 1; }
+  60%  { transform: translateY(-40px) scaleX(1.2) rotate(8deg); opacity: 1; }
+  100% { transform: translateY(-300px) scaleX(0.5) rotate(25deg); opacity: 0; }
+}
+
+/*-----------------------------------------------------
+  Luna y Estrellas
+-------------------------------------------------------*/
+#moon {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 30% 30%, #fffde4 70%, #fff9b0 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 40px 10px #fff9b0;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(40px) scale(0.8);
+  transition: opacity 1.5s, transform 1.5s;
+  display: block;
+}
+body.night #moon {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: moonGlow 2.5s infinite alternate;
+}
+
+#starContainer {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* Estrellas animadas y que parpadean */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 1.5s;
+  box-shadow: 0 0 6px 2px #fff;
+}
+
+.star.visible {
+  opacity: 0.7;
+}
+
+/* Movimiento suave horizontal de las estrellas */
+@keyframes moveStar {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(40px); }
+}
+
+/*-----------------------------------------------------
+  Planta, Tronco, Flor y Ramas (Florecimiento Integral)
+-------------------------------------------------------*/
+#plantContainer {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 600px;
+  z-index: 5;
+}
+
+/* Tronco: Crece de 0 a 230px en 2s */
+#plantTrunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 30px;
+  height: 0;
+  background: linear-gradient(to bottom, #228B22, #2E8B57);
+  border-radius: 50px;
+  transform: translateX(-50%); /* Quitamos el rotate para que esté recto */
+  animation: growTrunk 2s forwards;
+}
+
+@keyframes growTrunk {
+  from { height: 0; }
+  to { height: 230px; }
+}
+
+#plantTrunk::before,
+#plantTrunk::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  background: #2E8B57;
+  border-radius: 50px 50px 0 0;
+}
+
+#plantTrunk::before {
+  top: 100px;
+  left: -40px;
+  transform: rotate(-30deg);
+}
+
+#plantTrunk::after {
+  top: 160px;
+  right: -40px;
+  transform: rotate(30deg);
+}
+
+/* Flor Central – Tulipán Natural */
+/* Se posiciona para que su base (bottom) se una al tronco (230px de alto) */
+#centralFlower {
+  position: absolute;
+  bottom: 200px;
+  left: 46%;
+  width: 120px;
+  height: 120px;
+  transform: translateX(-50%);
+  background: none;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  /* Elimina clip-path y fondo anterior */
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: flowerSway 3s infinite ease-in-out;
+}
+
+@keyframes flowerSway {
+  0%   { transform: rotate(-4deg) scale(1);}
+  50%  { transform: rotate(4deg) scale(1.04);}
+  100% { transform: rotate(-4deg) scale(1);}
+}
+
+/* PETALOS */
+.petal {
+  position: absolute;
+  bottom: 0;
+  width: 70px;
+  height: 110px;
+  background: linear-gradient(to top, #ff6ec7 70%, #ffb6e6 100%);
+  border-radius: 60px 60px 60px 60px / 100px 100px 60px 60px;
+  z-index: 1;
+  opacity: 0; /* <-- Cambia a 0 para animar la aparición */
+  animation: petalBloom 1.2s forwards;
+  animation-delay: 2s; /* Espera a que el tallo termine */
+}
+
+.petal.center {
+  left: 50%;
+  width: 60px;
+  height: 130px;
+  bottom: 0;
+  transform: translateX(-50%) scaleY(0);
+  border-radius: 38px 38px 60px 60px / 110px 110px 60px 60px;
+  background: linear-gradient(to top, #ff6ec7 70%, #ffb6e6 100%);
+  z-index: 3;
+  animation: petalBloomCenter 1.2s forwards;
+  animation-delay: 2.2s;
+}
+
+.petal.left {
+  left: 50%;
+  width: 54px;
+  height: 110px;
+  bottom: 0;
+  transform: translateX(-100%) rotate(-22deg) scaleY(0);
+  border-radius: 60px 70px 60px 60px / 100px 110px 60px 60px;
+  background: linear-gradient(to top, #ff6ec7 70%, #ffb6e6 100%);
+  z-index: 2;
+  animation: petalBloomLeft 1.2s forwards;
+  animation-delay: 2.4s;
+}
+
+.petal.right {
+  left: 50%;
+  width: 54px;
+  height: 110px;
+  bottom: 0;
+  transform: rotate(22deg) scaleY(0);
+  border-radius: 70px 60px 60px 60px / 110px 100px 60px 60px;
+  background: linear-gradient(to top, #ff6ec7 70%, #ffb6e6 100%);
+  z-index: 2;
+  animation: petalBloomRight 1.2s forwards;
+  animation-delay: 2.6s;
+}
+
+@keyframes petalBloom {
+  to {
+    opacity: 1;
+    transform: none; /* El transform de la clase se aplica */
+  }
+}
+@keyframes petalBloomCenter {
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+@keyframes petalBloomLeft {
+  to {
+    opacity: 1;
+    transform: translateX(-100%) rotate(-22deg) scaleY(1);
+  }
+}
+@keyframes petalBloomRight {
+  to {
+    opacity: 1;
+    transform: rotate(22deg) scaleY(1);
+  }
+}
+
+@keyframes swayTulip {
+  0%   { transform: translateX(-50%) rotate(180deg) scale(1) rotate(-4deg);}
+  50%  { transform: translateX(-50%) rotate(180deg) scale(1) rotate(4deg);}
+  100% { transform: translateX(-50%) rotate(180deg) scale(1) rotate(-4deg);}
+}
+
+/* Ramas laterales (simulando hojas) */
+/* Se ubican a los lados para parecer unidas a la planta */
+.branch {
+  position: absolute;
+  width: 220px;
+  height: 80px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(40px) scale(0.7); /* Empieza abajo y pequeño */
+  transition: opacity 0.8s, transform 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.branch.show {
+  opacity: 1;
+  transform: translateY(0) scale(1); /* Termina en su posición original */
+}
+
+/* Posiciones: a la izquierda y a la derecha del conjunto tronco+flor */
+#branch1 { top: 520px; left: calc(55% - 75px); }
+#branch2 { top: 440px; left: calc(55% - 79px); }
+#branch3 { top: 520px; left: calc(33.99% + 55px); }
+#branch4 { top: 440px; left: calc(33.99% + 55px); }
+#branch5 { top: 350px; left: calc(33.99% + 55px); }
+
+/* Tallo recto para cada rama */
+.curved-stem {
+  width: 100px;
+  height: 8px;
+  background: #228B22;
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.left-branch .curved-stem,
+.right-branch .curved-stem {
+  width: 90px;                /* Más corta */
+  height: 40px;               /* Más curva */
+  border-radius: 0 60px 90px 90px / 0 60px 60px 60px;
+  border-top: 0;
+  border-bottom: 8px solid #4caf50; /* Verde hoja */
+  background: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+}
+
+.right-branch .curved-stem {
+  left: auto;
+  right: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 8px solid #4caf50;
+  transform: translateY(-50%) scaleX(0) scaleX(-1);
+  transform-origin: right center;
+}
+
+.branch.show .curved-stem {
+  opacity: 1;
+  transform: translateY(-50%) scaleX(1);
+}
+
+/* Medios en las ramas (Fotos/Videos) */
+.left-branch .media,
+.right-branch .media {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(0.8);
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.left-branch .media {
+  left: 90px; /* Igual al width de la curva */
+  top: 50%;
+  transform: translateY(-50%) scale(0.8);
+}
+
+.right-branch .media {
+  right: 90px; /* Igual al width de la curva */
+  top: 50%;
+  transform: translateY(-50%) scale(0.8);
+}
+
+.branch.open .media {
+  transform: translate(0, -50%) scale(1);
+  opacity: 1;
+}
+
+.caption {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+  opacity: 0;
+  transition: opacity 0.3s;
+  width: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  top: 100%;
+}
+
+.branch.open .caption {
+  opacity: 1;
+}
+
+/* Estilos para imágenes y video */
+.media img,
+.media video {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 4px solid #ff6ec7; /* Color de pétalo */
+  border-radius: 50%;        /* Forma redondeada */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  background: #fff;
+  transition: transform 0.3s;
+}
+
+.media {
+  background: none;
+  padding: 0;
+}
+
+.media.enlarged {
+  transform: scale(1.8);
+}
+
+/* Mensaje flotante bajo la media */
+.media-message {
+  position: absolute;
+  left: 50%;
+  top: 110%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 15px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 20;
+}
+.media.enlarged + .media-message {
+  opacity: 1;
+}
+
+#plantGroup {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: swayTulipNatural 5s ease-in-out infinite 3.5s;
+}
+
+@keyframes swayTulipNatural {
+  0%   { transform: translateX(-50%) rotate(-2deg) scaleY(1) scaleX(1); }
+  10%  { transform: translateX(-50%) rotate(-3deg) scaleY(1.03) scaleX(0.98);}
+  20%  { transform: translateX(-50%) rotate(-4deg) scaleY(1.05) scaleX(0.97);}
+  30%  { transform: translateX(-50%) rotate(-2deg) scaleY(1.02) scaleX(1);}
+  40%  { transform: translateX(-50%) rotate(0deg) scaleY(1) scaleX(1.02);}
+  50%  { transform: translateX(-50%) rotate(2deg) scaleY(0.98) scaleX(1.03);}
+  60%  { transform: translateX(-50%) rotate(3deg) scaleY(0.97) scaleX(1.05);}
+  70%  { transform: translateX(-50%) rotate(2deg) scaleY(0.99) scaleX(1.02);}
+  80%  { transform: translateX(-50%) rotate(0deg) scaleY(1) scaleX(1);}
+  90%  { transform: translateX(-50%) rotate(-1deg) scaleY(1.01) scaleX(0.99);}
+  100% { transform: translateX(-50%) rotate(-2deg) scaleY(1) scaleX(1);}
+}
+
+#centralFlower.hide-flower {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-80px) scale(0.7);
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+.branch .media {
+  opacity: 0;
+  transition: opacity 0.5s 0.7s;
+}
+.branch.show .media {
+  opacity: 1;
+}
+
+.branch.hide-branch {
+  opacity: 0;
+  transform: translateY(40px) scale(0.7);
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+/* Modal para imagen/video grande */
+.media-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+.media-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  text-align: center;
+}
+.media-modal-content img,
+.media-modal-content video {
+  max-width: 80vw;
+  max-height: 70vh;
+  border-radius: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.media-modal-close {
+  position: absolute;
+  top: 10px; right: 18px;
+  font-size: 2rem;
+  color: #ff6ec7;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1010;
+}
+.media-modal-close:focus {
+  outline: 2px solid #ff6ec7;
+}
+#mediaModalMessage {
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: 8px;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 600px) {
+  .media-modal-content img,
+  .media-modal-content video {
+    max-width: 90vw;
+    max-height: 40vh;
+  }
+  .media-modal-content {
+    padding: 10px 4vw 10px 4vw;
+  }
+}
+
+.eye-quotes-box {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.85);
+  color: #222;
+  font-size: 1.2rem;
+  border-radius: 14px;
+  padding: 18px 32px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  min-width: 220px;
+  text-align: center;
+  z-index: 2000;
+  animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+#box.open::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  border-radius: 10px;
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 80%);
+  opacity: 0;
+  animation: boxShine 0.7s 0.3s forwards;
+  pointer-events: none;
+  z-index: 5;
+}
+@keyframes boxShine {
+  0% { opacity: 0; }
+  40% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Agregar después de los estilos del ribbon existente */
+
+/* Moño decorativo */
+.bow {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  transition: transform 1s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+}
+
+.bow-left,
+.bow-right {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+  background: #222;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.bow-left {
+  transform: rotate(-30deg);
+  left: -20px;
+}
+
+.bow-right {
+  transform: rotate(30deg);
+  right: -20px;
+}
+
+.bow-center {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #222;
+  border-radius: 50%;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Animación para cuando se abre la caja */
+.bow.open {
+  animation: untieVertical 1s forwards cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+/* Luna y estrellas */
+#moon {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 30% 30%, #fffde4 70%, #fff9b0 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 40px 10px #fff9b0;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(40px) scale(0.8);
+  transition: opacity 1.5s, transform 1.5s;
+  display: block;
+}
+body.night #moon {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: moonGlow 2.5s infinite alternate;
+}
+
+#starContainer {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 99;
+}
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 1.5s;
+  box-shadow: 0 0 6px 2px #fff;
+}
+
+.star.visible {
+  opacity: 0.7;
+}
+
+/* Frases arriba */
+.eye-quotes-box {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.85);
+  color: #222;
+  font-size: 1.2rem;
+  border-radius: 14px;
+  padding: 18px 32px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  min-width: 220px;
+  text-align: center;
+  z-index: 2000;
+  animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Modal para fotos/videos */
+.media-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+.media-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  text-align: center;
+}
+.media-modal-content img,
+.media-modal-content video {
+  max-width: 80vw;
+  max-height: 70vh;
+  border-radius: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+/* Animación de la flor central */
+#centralFlower {
+  animation: flowerSway 3s infinite ease-in-out;
+}
+@keyframes flowerSway {
+  0%   { transform: rotate(-4deg) scale(1);}
+  50%  { transform: rotate(4deg) scale(1.04);}
+  100% { transform: rotate(-4deg) scale(1);}
+}
+
+#moon.excited {
+  animation: moonExcitedAnim 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes moonExcitedAnim {
+  0%   { transform: rotate(0deg) scale(1);}
+  30%  { transform: rotate(-18deg) scale(1.08);}
+  60%  { transform: rotate(18deg) scale(1.08);}
+  100% { transform: rotate(0deg) scale(1);}
+}
+
+#moonModal {
+  display: none;
+}
+#moonModal.show {
+  display: flex;
+}
+
+#sun {
+  position: fixed;
+  top: 40px;
+  left: 60px;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 30% 30%, #fffde4 70%, #ffe066 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 40px 10px #ffe066;
+  z-index: 100;
+  transition: opacity 1.5s, transform 1.5s;
+}
+body.night #sun {
+  opacity: 0;
+  transform: translateY(100px) scale(0.7);
+}
+
+#nightOverlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  transition: opacity 2s;
+  z-index: 98;
+}
+body.night #nightOverlay {
+  opacity: 0.18;
+}
+
+.birthday-message {
+  position: absolute;
+  top: calc(100% + 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.92);
+  color: #222;
+  font-size: 1.15rem;
+  border-radius: 14px;
+  padding: 14px 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  min-width: 220px;
+  text-align: center;
+  z-index: 200;
+  opacity: 1;
+  transition: opacity 1.2s;
+  margin-top: 12px;
+  animation: fadeIn 1.2s;
+}
+.birthday-message.fade-out {
+  opacity: 0;
+  transition: opacity 1.2s;
+}
+
+#mainContainer {
+  position: relative;
+}
+
+.star-counter {
+  display: none;
+  position: absolute;
+  left: calc(50% + 100px); /* Ajusta este valor según tu flor */
+  bottom: 320px;           /* Ajusta según la altura de tu flor */
+  background: rgba(0, 0, 0, 0);
+  color: #fff6f6;
+  font-size: 1.1rem;
+  border-radius: 14px;
+  padding: 10px 22px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0);
+  min-width: 180px;
+  text-align: center;
+  z-index: 200;
+  animation: fadeIn 1.2s;
+}
+
+/* Estrellas fugaces */
+.shooting-star {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, #fff 0%, #fff0 100%);
+  opacity: 0.8;
+  z-index: 1200;
+  pointer-events: none;
+  border-radius: 2px;
+  box-shadow: 0 0 8px 2px #fff;
+  animation: shootingStarAnim 1.2s linear forwards;
+}
+@keyframes shootingStarAnim {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scaleX(0.7) rotate(15deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(400px, 120px) scaleX(1.2) rotate(15deg);
+  }
+}
+
+/* Fondo de playa */
+#beachBackground {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 1.5s;
+  opacity: 1;
+  background: linear-gradient(to top, #ffe29f 0% 30%, #aee2ff 100%);
+  /* Arena abajo, cielo arriba */
+}
+body.night #beachBackground {
+  opacity: 0;
+  transition: opacity 1.5s;
+}
+
+/* Palmeras SVG decorativas */
+.beach-palm {
+  position: absolute;
+  bottom: 0;
+  left: 8vw;
+  width: 90px;
+  height: 180px;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 1.5s;
+}
+.beach-palm.right {
+  left: auto;
+  right: 8vw;
+  transform: scaleX(-1);
+}
+
+/* Ola de playa */
+.beach-wave {
+  transition: opacity 1.5s;
+}
+
+/* Ocultar palmeras y ola en modo noche */
+body.night .beach-palm,
+body.night .beach-wave {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.beach-shell, .beach-star, .beach-snail {
+  pointer-events: none;
+  transition: opacity 1.5s;
+}
+body.night .beach-shell,
+body.night .beach-star,
+body.night .beach-snail {
+  opacity: 0;
+}
+
+.palm-leaf {
+  transform-box: fill-box;
+  transform-origin: 30px 40px; /* Ajusta según el SVG, para las extras usa 30px 50px */
+}
+
+.beach-palm .leaf1 {
+  animation: palmSway1 3.5s infinite ease-in-out alternate;
+}
+.beach-palm .leaf2 {
+  animation: palmSway2 4.2s infinite ease-in-out alternate;
+  animation-delay: 0.7s;
+}
+.beach-palm .leaf3 {
+  animation: palmSway3 3.8s infinite ease-in-out alternate;
+  animation-delay: 1.2s;
+}
+
+/* Para las palmeras extra, cambia el origin si es necesario */
+.beach-palm[style*="left:18vw"] .palm-leaf,
+.beach-palm.right[style*="right:18vw"] .palm-leaf {
+  transform-origin: 30px 50px;
+}
+.beach-palm[style*="left:18vw"] .leaf1,
+.beach-palm.right[style*="right:18vw"] .leaf1 {
+  animation: palmSway4 3.1s infinite ease-in-out alternate;
+}
+.beach-palm[style*="left:18vw"] .leaf2,
+.beach-palm.right[style*="right:18vw"] .leaf2 {
+  animation: palmSway5 4.5s infinite ease-in-out alternate;
+  animation-delay: 0.9s;
+}
+
+/* Animaciones diferentes para cada hoja */
+@keyframes palmSway1 {
+  0%   { transform: rotate(-7deg);}
+  100% { transform: rotate(8deg);}
+}
+@keyframes palmSway2 {
+  0%   { transform: rotate(5deg);}
+  100% { transform: rotate(-10deg);}
+}
+@keyframes palmSway3 {
+  0%   { transform: rotate(-4deg);}
+  100% { transform: rotate(6deg);}
+}
+@keyframes palmSway4 {
+  0%   { transform: rotate(-9deg);}
+  100% { transform: rotate(7deg);}
+}
+@keyframes palmSway5 {
+  0%   { transform: rotate(8deg);}
+  100% { transform: rotate(-8deg);}
+}
